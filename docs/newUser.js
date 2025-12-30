@@ -38,7 +38,7 @@ function NewUser() {
 		}).then(json => {
 			const responseCode = JSON.stringify(json.Code)
 			if (responseCode == "200") {
-				window.open("loginPage.html", "_self");
+				window.open("index.html", "_self");
 			} else {
 				errorMessage.innerHTML = invalidUser;
 			}
