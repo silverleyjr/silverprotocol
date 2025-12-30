@@ -22,12 +22,12 @@ function NewUser() {
 	const errorMessage = document.getElementById("errorLogin");
 	errorMessage.style.display = "none";
 
-	const uri = ("https://socorro-postabdominal-nongeologically.ngrok-free.dev/account/new/?username=" + newUsername + "&password=" + newPassword + "&authorization=SilverleyFodao");
+	const uri = ("https://socorro-postabdominal-nongeologically.ngrok-free.dev/account/new");
 	const options = {
 		method: "POST",
 		headers: {
-			"Authorization": "SilverleyFodao",
-			"Username": "Silverley",
+			"Authorization": newUsername,
+			"Password": newPassword,
 			"ngrok-skip-browser-warning": "lala"
 		}
 	};

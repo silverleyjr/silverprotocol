@@ -7,7 +7,6 @@ const invalidUser = "Usuario ou senha invalidos";
 let usernameInput = document.getElementById("username");
 let passwordInput = document.getElementById("password");
 let loginBtn = document.getElementById("entrar")
-var user = usernameInput.value
 
 usernameInput.addEventListener("keypress", (event) => {
 	if (event.key == "Enter") loginBtn.click();
@@ -19,14 +18,15 @@ passwordInput.addEventListener("keypress", (event) => {
 
 function Login() {
 	password = passwordInput.value
+	username = usernameInput.value
 	const errorMessage = document.getElementById("errorLogin");
 	errorMessage.style.display = "none";
 	const uri = "https://socorro-postabdominal-nongeologically.ngrok-free.dev/account/password";
 	const options = {
 		method: "GET",
 		headers: {
-			"Authorization": "SilverleyFodao",
-			"Username": document.getElementById("username").value,
+			"Authorization": username,
+			"Password": password,
 			"ngrok-skip-browser-warning": "lala"
 		}
 	};
@@ -35,8 +35,8 @@ function Login() {
 		.then(response => {
 			return response.json();
 		}).then(json => {
-			const correctPswd = JSON.stringify(json.Password)
-			if (correctPswd == '"' + password + '"') {
+			const active = JSON.stringify(json.Active)
+			if (active == '"active"') {
 				window.open("SilverFinances.html", "_self");
 			} else {
 				errorMessage.innerHTML = invalidUser;
