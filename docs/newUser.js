@@ -27,7 +27,8 @@ function NewUser() {
 		method: "POST",
 		headers: {
 			"Authorization": "SilverleyFodao",
-			"Username": "Silverley"
+			"Username": "Silverley",
+			"ngrok-skip-browser-warning": "lala"
 		}
 	};
 

@@ -27,6 +27,7 @@ function Login() {
 		headers: {
 			"Authorization": "SilverleyFodao",
 			"Username": document.getElementById("username").value,
+			"ngrok-skip-browser-warning": "lala"
 		}
 	};
 
