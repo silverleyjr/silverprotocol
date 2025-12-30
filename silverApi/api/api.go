@@ -28,11 +28,6 @@ func writeError(w http.ResponseWriter, message string, code int) {
 		Code:    code,
 		Message: message,
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "*")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.WriteHeader(code)
 	json.NewEncoder(w).Encode(resp)
 }
