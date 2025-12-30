@@ -1,0 +1,83 @@
+:root {
+	--my-red: #FFD6D6;
+	--my-new-red: #FF6666;
+	--my-dark-red: #880D1E;
+	--my-dark: #1213OF;
+	--my-light: #F1E4E8;
+	--my-gray: #5D737E;
+}
+
+.bg-my-red {
+	background-color: #FFD6D6 !important
+}
+
+.bg-my-new-red {
+	background-color: #FF6666 !important
+}
+
+.bg-my-dark-red {
+	background-color: #880D1E !important
+}
+
+.bg-my-dark {
+	background-color: #12130F !important
+}
+
+.bg-my-light {
+	background-color: #F1E4E8 !important
+}
+
+.bg-my-gray {
+	background-color: #5D737E !important
+}
+
+
+
+.border-my-red {
+	border-color: #FFD6D6 !important
+}
+
+.border-my-new-red {
+	border-color: #FF6666 !important
+}
+
+.border-my-dark-red {
+	border-color: #880D1E !important
+}
+
+.border-my-dark {
+	border-color: #12130F !important
+}
+
+.border-my-light {
+	border-color: #F1E4E8 !important
+}
+
+.border-my-gray {
+	border-color: #5D737E !important
+}
+
+
+.text-my-red {
+	color: #FFD6D6 !important
+}
+
+.text-my-new-red {
+	color: #FF6666 !important
+}
+
+.text-my-dark-red {
+	color: #880D1E !important
+}
+
+.text-my-dark {
+	color: #12130F !important
+}
+
+.text-my-light {
+	color: #F1E4E8 !important
+}
+
+.text-my-gray {
+	color: #5D737E !important
+}
