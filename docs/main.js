@@ -21,7 +21,7 @@ function Login() {
 	password = passwordInput.value
 	const errorMessage = document.getElementById("errorLogin");
 	errorMessage.style.display = "none";
-	const uri = "http://localhost:8082/account/password";
+	const uri = "https://socorro-postabdominal-nongeologically.ngrok-free.dev/account/password";
 	const options = {
 		method: "GET",
 		headers: {
