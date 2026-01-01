@@ -36,18 +36,19 @@ function Login() {
 			return response.json();
 		}).then(json => {
 			const authorizationWithMarks = JSON.stringify(json.Authorization)
+			let authorization = ""
 			if (authorizationWithMarks != "") {
-				let authorization = authorizationWithMarks.substring(1, authorizationWithMarks.length - 1)
+				authorization = authorizationWithMarks.substring(1, authorizationWithMarks.length - 1)
+				console.log(authorizationWithMarks)
 				console.log(authorization)
-			} else {
-				let authorization = ""
 			}
-			if (authorization != "") {
-				window.open("SilverFinances.html?Auth=" + encodeURIComponent(authorization), "_self");
-			} else {
-				errorMessage.innerHTML = invalidUser;
-				errorMessage.style.display = "block";
-			}
+			window.open("SilverFinances.html?Auth=" + encodeURIComponent(authorization), "_self");
+			errorMessage.innerHTML = invalidUser;
+			errorMessage.style.display = "block";
+		})
+		.catch(err => {
+			errorMessage.innerHTML = err;
+			errorMessage.style.display = "block";
 		})
 }
 
