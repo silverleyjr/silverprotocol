@@ -26,9 +26,8 @@ function NewUser() {
 	const options = {
 		method: "POST",
 		headers: {
-			"Authorization": newUsername,
+			"Name": newUsername,
 			"Password": newPassword,
-			"Owner": "SilverleyFodao",
 			"ngrok-skip-browser-warning": "lala"
 		}
 	};
@@ -42,9 +41,9 @@ function NewUser() {
 				window.open("index.html", "_self");
 			} else {
 				errorMessage.innerHTML = invalidUser;
+				errorMessage.style.display = "block";
 			}
 		})
-	errorMessage.style.display = "block";
 }
 
 

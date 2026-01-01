@@ -21,11 +21,11 @@ function Login() {
 	username = usernameInput.value
 	const errorMessage = document.getElementById("errorLogin");
 	errorMessage.style.display = "none";
-	const uri = "https://socorro-postabdominal-nongeologically.ngrok-free.dev/account/password";
+	const uri = "https://socorro-postabdominal-nongeologically.ngrok-free.dev/account/login";
 	const options = {
 		method: "GET",
 		headers: {
-			"Authorization": username,
+			"Name": username,
 			"Password": password,
 			"ngrok-skip-browser-warning": "lala"
 		}
@@ -35,14 +35,20 @@ function Login() {
 		.then(response => {
 			return response.json();
 		}).then(json => {
-			const active = JSON.stringify(json.Active)
-			if (active == '"active"') {
-				window.open("SilverFinances.html", "_self");
+			const authorizationWithMarks = JSON.stringify(json.Authorization)
+			if (authorizationWithMarks != "") {
+				let authorization = authorizationWithMarks.substring(1, authorizationWithMarks.length - 1)
+				console.log(authorization)
+			} else {
+				let authorization = ""
+			}
+			if (authorization != "") {
+				window.open("SilverFinances.html?Auth=" + encodeURIComponent(authorization), "_self");
 			} else {
 				errorMessage.innerHTML = invalidUser;
+				errorMessage.style.display = "block";
 			}
 		})
-	errorMessage.style.display = "block";
 }
 
 function LoginPage() {
