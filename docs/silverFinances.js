@@ -9,6 +9,9 @@ let statsText = document.getElementById("StatsText");
 let pokemonImage = document.getElementById("PokemonImage");
 let pokemonImageDiv = document.getElementById("ImageDiv");
 let emptyDiv = document.getElementById("emptyDiv");
+let token = "";
+const urlParams = new URLSearchParams(window.location.search);
+token = urlParams.get("Auth");
 
 pokemonNameInput.addEventListener("keypress", (event) => {
 	if (event.key == "Enter") detailsBtn.click();
@@ -28,8 +31,8 @@ function GetPokemonDetails() {
 	//};
 
 	// Use the URLSearchParams API to easily read the value
-	const urlParams = new URLSearchParams(window.location.search);
-	const token = urlParams.get("Auth");
+	//
+	//const token = urlParams.get("Auth");
 
 	const uri = ("https://socorro-postabdominal-nongeologically.ngrok-free.dev/pokemon/stats");
 	//const uri = ("https://pokeapi.co/api/v2/pokemon/" + pokemonName);
@@ -83,6 +86,7 @@ function LoginPage() {
 	window.open("index.html", "_self");
 }
 
-function NewUserPage() {
-	window.open("newUser.html", "_self");
+function GuessPokemonPage() {
+	window.open("guessPokemon.html?Auth=" + encodeURIComponent(token), "_self");
+	//window.open("SilverFinances.html?Auth=" + encodeURIComponent(authorization), "_self");
 }

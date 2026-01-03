@@ -5,6 +5,11 @@
 	--my-dark: #1213OF;
 	--my-light: #F1E4E8;
 	--my-gray: #5D737E;
+	--my-green: #5CF026;
+	--my-yellow: #E9F026;
+	--my-red: #F04426;
+	--my-under: #3B82F6
+	--my-over: #F97316
 }
 
 .bg-my-red {
@@ -31,7 +36,25 @@
 	background-color: #5D737E !important
 }
 
+.bg-my-green {
+	background-color: #5CF026 !important
+}
 
+.bg-my-yellow {
+	background-color: #E9F026 !important
+}
+
+.bg-my-light-red {
+	background-color: #F04426 !important
+}
+
+.bg-my-under {
+	background-color: #3B82F6 !important
+}
+
+.bg-my-over {
+	background-color: #F97316 !important
+}
 
 .border-my-red {
 	border-color: #FFD6D6 !important
