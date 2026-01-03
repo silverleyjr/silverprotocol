@@ -5,7 +5,6 @@ let token = "";
 const urlParams = new URLSearchParams(window.location.search);
 token = urlParams.get("Auth");
 
-
 pokemonNameInput.addEventListener("keypress", (event) => {
 	if (event.key == "Enter") guessButton.click();
 });
