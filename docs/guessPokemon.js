@@ -119,18 +119,18 @@ function Guess() {
 			//spDefenseStatElement.innerHTML = "Sp. defense:<br>" + spDefenseStat.toString()
 			//speedStatElement.innerHTML = "Speed:<br>" + speedStat.toString()
 
-			nameElement.innerHTML = nameValue.toString()
-			idElement.innerHTML = id.toString()
-			heightElement.innerHTML = height.toString()
-			weightElement.innerHTML = weight.toString()
-			type1Element.innerHTML = type1
-			type2Element.innerHTML = type2
-			hpStatElement.innerHTML = hpStat.toString()
-			attackStatElement.innerHTML = attackStat.toString()
-			defenseStatElement.innerHTML = defenseStat.toString()
-			spAttackStatElement.innerHTML = spAttackStat.toString()
-			spDefenseStatElement.innerHTML = spDefenseStat.toString()
-			speedStatElement.innerHTML = speedStat.toString()
+			nameElement.innerHTML = "name: <br>" +nameValue.toString()
+			idElement.innerHTML = "id: <br>" +id.toString()
+			heightElement.innerHTML = "height: <br>" +height.toString()
+			weightElement.innerHTML = "weight: <br>" +weight.toString()
+			type1Element.innerHTML = "type 1: <br>" +type1
+			type2Element.innerHTML = "type 2: <br>" +type2
+			hpStatElement.innerHTML = "hp: <br>" +hpStat.toString()
+			attackStatElement.innerHTML = "att: <br>" +attackStat.toString()
+			defenseStatElement.innerHTML = "def: <br>" +defenseStat.toString()
+			spAttackStatElement.innerHTML = "sp att: <br>" +spAttackStat.toString()
+			spDefenseStatElement.innerHTML = "sp def: <br>" +spDefenseStat.toString()
+			speedStatElement.innerHTML = "speed: <br>" +speedStat.toString()
 			
 			imgElement.src = JSON.stringify(json.Sprite).substring(1, JSON.stringify(json.Sprite).length - 1); //
 
