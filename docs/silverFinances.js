@@ -3,7 +3,9 @@
 //   made by: Silverley
 
 let pokemonNameInput = document.getElementById("pokemonName");
+let getPokemonError = document.getElementById("getPokemonError");
 let detailsBtn = document.getElementById("DetailsBtn");
+let grid = document.getElementById("grid");
 let detailsText = document.getElementById("DetailsText");
 let statsText = document.getElementById("StatsText");
 let pokemonImage = document.getElementById("PokemonImage");
@@ -19,23 +21,7 @@ pokemonNameInput.addEventListener("keypress", (event) => {
 
 function GetPokemonDetails() {
 	pokemonName = pokemonNameInput.value;
-
-	//const uri = ("https://socorro-postabdominal-nongeologically.ngrok-free.dev/account/new");
-	//const options = {
-	//	method: "POST",
-	//	headers: {
-	//		"Name": newUsername,
-	//		"Password": newPassword,
-	//		"ngrok-skip-browser-warning": "lala"
-	//	}
-	//};
-
-	// Use the URLSearchParams API to easily read the value
-	//
-	//const token = urlParams.get("Auth");
-
 	const uri = ("https://socorro-postabdominal-nongeologically.ngrok-free.dev/pokemon/stats");
-	//const uri = ("https://pokeapi.co/api/v2/pokemon/" + pokemonName);
 	const options = {
 		method: "GET",
 		headers: {
@@ -46,9 +32,19 @@ function GetPokemonDetails() {
 	};
 	fetch(uri, options)
 		.then(response => {
-			return response.json();
-		}).then(json => {
-			console.log(json)
+			let responseJson = response.json();
+			let responseCode = response.status;
+			if (responseCode === 400) {
+				throw "Nome de pokemon invalido"
+			}
+			if (responseCode === 500) {
+				throw "Um erro inesperado ocorreu"
+			}
+			return responseJson;
+		})
+		.then(json => {
+			getPokemonError.style.display = "none";
+			grid.classList.replace("pt-1", "pt-3");
 			let pokemonName = "Name: " + JSON.stringify(json.Name).substring(1, JSON.stringify(json.Name).length - 1)
 			let pokemonId = "Id: " + JSON.stringify(json.Id)
 			let pokemonHeight = "Height: " + JSON.stringify(json.Height)
@@ -60,7 +56,7 @@ function GetPokemonDetails() {
 			let pokemonStat4 = "special-attack: " + JSON.stringify(json.Stats[3])
 			let pokemonStat5 = "special-defense: " + JSON.stringify(json.Stats[4])
 			let pokemonStat6 = "speed: " + JSON.stringify(json.Stats[5])
-			
+
 			pokemonImage.src = JSON.stringify(json.Sprite).substring(1, JSON.stringify(json.Sprite).length - 1)
 			pokemonImageDiv.style.display = "block";
 			emptyDiv.style.display = "block";
@@ -69,9 +65,9 @@ function GetPokemonDetails() {
 			let pokemonType2 = ""
 
 			if (json.Types.length > 1) {
-				pokemonType2 = ", " + JSON.stringify(json.Types[1])
+				pokemonType2 = "<br>Type 2: " + JSON.stringify(json.Types[1])
 			}
-			const pokemonDetails = ('<h2 class="text-center">Detalhes</h2>' + pokemonName + "<br>" + pokemonId + "<br>" + pokemonHeight + "<br>" + pokemonWeight + "<br>Types: " + pokemonType1 + pokemonType2);
+			const pokemonDetails = ('<h2 class="text-center">Detalhes</h2>' + pokemonName + "<br>" + pokemonId + "<br>" + pokemonHeight + "<br>" + pokemonWeight + "<br>Type 1: " + pokemonType1 + pokemonType2);
 			const pokemonStats = ('<h2 class="text-center">Stats</h2>' + pokemonStat1 + "<br>" + pokemonStat2 + "<br>" + pokemonStat3 + "<br>" + pokemonStat4 + "<br>" + pokemonStat5 + "<br>" + pokemonStat6 + "<br>");
 
 			detailsText.innerHTML = pokemonDetails;
@@ -79,6 +75,11 @@ function GetPokemonDetails() {
 			pokemonNameInput.value = "";
 			detailsText.style.display = "block";
 			statsText.style.display = "inline-block";
+		}).catch(err => {
+			getPokemonError.style.display = "block";
+			grid.classList.replace("pt-3", "pt-2");
+			getPokemonError.innerHTML = err;
+			return Promise.reject(err);
 		})
 }
 

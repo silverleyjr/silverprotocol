@@ -34,15 +34,25 @@ function NewUser() {
 
 	fetch(uri, options)
 		.then(response => {
-			return response.json();
+			let responseJson = response.json();
+			let responseCode = response.status;
+			if (responseCode === 400) {
+				throw "Usuario ou senha invalidos";
+			}
+			if (responseCode === 500) {
+				throw "Um erro inesperado ocorreu";
+			}
+			return responseJson;
 		}).then(json => {
 			const responseCode = JSON.stringify(json.Code)
 			if (responseCode == "200") {
+				errorMessage.style.display = "none";
 				window.open("index.html", "_self");
-			} else {
-				errorMessage.innerHTML = invalidUser;
-				errorMessage.style.display = "block";
-			}
+			}	
+		}).catch(err => {
+			errorMessage.style.display = "block";
+			errorMessage.innerHTML = err;
+			return Promise.reject(err);
 		})
 }
 

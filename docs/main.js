@@ -33,7 +33,15 @@ function Login() {
 
 	fetch(uri, options)
 		.then(response => {
-			return response.json();
+			let responseJson = response.json();
+			let responseCode = response.status;
+			if (responseCode === 400) {
+				throw "Usuario ou senha invalidos";
+			}
+			if (responseCode === 500) {
+				throw "Um erro inesperado ocorreu";
+			}
+			return responseJson;
 		}).then(json => {
 			const authorizationWithMarks = JSON.stringify(json.Authorization)
 			let authorization = ""
@@ -43,12 +51,10 @@ function Login() {
 				console.log(authorization)
 			}
 			window.open("SilverFinances.html?Auth=" + encodeURIComponent(authorization), "_self");
-			errorMessage.innerHTML = invalidUser;
+		}).catch(err => {
 			errorMessage.style.display = "block";
-		})
-		.catch(err => {
 			errorMessage.innerHTML = err;
-			errorMessage.style.display = "block";
+			return Promise.reject(err);
 		})
 }
 

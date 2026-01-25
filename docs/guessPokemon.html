@@ -29,7 +29,8 @@
 						<div class="mx-3 my-2 py-2">
 							<!--<label for="pokemonName" class="fs-3 text-my-dark-red">Pokemon:</label><br>-->
 							<input class="form-control" type="text" id="pokemonName" placeholder="Name or Id of the pokemon">
-							<div class="d-grid pt-3">
+							<div style="display: none" id="getPokemonError" class="fs-6 mt-1 pt-1 text-my-dark-red "></div>
+							<div class="d-grid pt-3" id="grid">
 								<button type="button" id="guessButton" class="btn btn-danger bg-my-dark border-my-dark-red border-2 text-my-light fs-5" onclick="Guess()">Guess</button>
 								<!--<div class="container">
 									<div class="row">

@@ -1,4 +1,4 @@
-
+let grid = document.getElementById("grid");
 let pokemonNameInput = document.getElementById("pokemonName");
 let guessButton = document.getElementById("guessButton");
 let token = "";
@@ -24,18 +24,25 @@ function Guess() {
 	fetch(uri, options)
 		.then(response => {
 			let responseJson = response.json();
-			let responseCode = JSON.stringify(responseJson.Code);
-			console.log("response code");
-			console.log(responseCode);
+			let responseCode = response.status;
+			if (responseCode === 400) {
+				throw "Nome de pokemon invalido";
+			}
+			if (responseCode === 500) {
+				throw "Um erro inesperado ocorreu"
+			}
 			return responseJson;
 		}).then(json => {
-			console.log("json")
-			console.log(json)
+			getPokemonError.style.display = "none";
+			grid.classList.replace("pt-1", "pt-3");
 			let pokemonContainer = document.getElementById("pokemonContainer");
 
 			let pokemonRowElement = document.createElement("div"); //
+			let pokemonColElement = document.createElement("div"); //
+			let pokemonNestedRowElement = document.createElement("div"); //
 			let imgDivElement = document.createElement("div"); //
 			let imgElement = document.createElement("img"); //
+			let nameElement = document.createElement("div"); //
 			let idElement = document.createElement("div"); //
 			let heightElement = document.createElement("div"); //
 			let weightElement = document.createElement("div"); //
@@ -47,14 +54,16 @@ function Guess() {
 			let spAttackStatElement = document.createElement("div"); //
 			let spDefenseStatElement = document.createElement("div"); //
 			let speedStatElement = document.createElement("div"); //
-
-			let classExample = "col-2 col-lg-1 p-2 w-8 border border-3 border-my-dark-red rounded align-items-center"
-			//let greenBg = " bg-my-green";
-			//let yellowBg = " bg-my-yellow";
-			//let redBg = " bg-my-light-red";
+			// col-lg-1
+			let classExample = "col-3 col-md-2 p-2 p-3 border border-3 border-my-dark-red rounded align-items-center fw-bold "
 			pokemonRowElement.className = "row mt-2 text-center";
+			pokemonColElement.className = "col-9 col-sm-10 col-xxl-11 text-center";
+			pokemonNestedRowElement.className = "row";
 
-			imgDivElement.className = classExample + " bg-my-light";
+			//imgDivElement.className = classExample + " bg-my-light";
+			imgDivElement.className = "col-3 col-sm-2 col-xxl-1 border p-2 w-5 border-4 border-my-dark-red rounded align-self-center bg-my-light";
+			
+			nameElement.className = classExample + " bg-my-light";
 			idElement.className = classExample;
 			heightElement.className = classExample;
 			weightElement.className = classExample;
@@ -79,8 +88,7 @@ function Guess() {
 			getBgColor(json.Answers[9], spDefenseStatElement)
 			getBgColor(json.Answers[10], speedStatElement)
 
-			 //= JSON.stringify(json.Types[0]).substring(1, JSON.stringify(json.Types[0]).length - 1)
-
+			nameValue  = JSON.stringify(json.Name).substring(1, JSON.stringify(json.Name).length - 1)
 			id = parseInt(JSON.stringify(json.Id));
 			height = parseInt(JSON.stringify(json.Height));
 			weight = parseInt(JSON.stringify(json.Weight));
@@ -98,44 +106,63 @@ function Guess() {
 			spDefenseStat = parseInt(JSON.stringify(json.Stats[4]));
 			speedStat = parseInt(JSON.stringify(json.Stats[5]));
 
-			idElement.innerHTML = "Id:<br>" + id.toString()
-			heightElement.innerHTML = "Height:<br>" + height.toString()
-			weightElement.innerHTML = "Weight:<br>" + weight.toString()
-			type1Element.innerHTML = "Type 1:<br>" + type1
-			type2Element.innerHTML = "Type 2:<br>" + type2
-			hpStatElement.innerHTML = "HP:<br>" + hpStat.toString()
-			attackStatElement.innerHTML = "Attack:<br>" + attackStat.toString()
-			defenseStatElement.innerHTML = "Defense:<br>" + defenseStat.toString()
-			spAttackStatElement.innerHTML = "Sp. attack:<br>" + spAttackStat.toString()
-			spDefenseStatElement.innerHTML = "Sp. defense:<br>" + spDefenseStat.toString()
-			speedStatElement.innerHTML = "Speed:<br>" + speedStat.toString()
+			//nameElement.innerHTML = "Name:<br>" + nameValue.toString()
+			//idElement.innerHTML = "Id:<br>" + id.toString()
+			//heightElement.innerHTML = "Height:<br>" + height.toString()
+			//weightElement.innerHTML = "Weight:<br>" + weight.toString()
+			//type1Element.innerHTML = "Type 1:<br>" + type1
+			//type2Element.innerHTML = "Type 2:<br>" + type2
+			//hpStatElement.innerHTML = "HP:<br>" + hpStat.toString()
+			//attackStatElement.innerHTML = "Attack:<br>" + attackStat.toString()
+			//defenseStatElement.innerHTML = "Defense:<br>" + defenseStat.toString()
+			//spAttackStatElement.innerHTML = "Sp. attack:<br>" + spAttackStat.toString()
+			//spDefenseStatElement.innerHTML = "Sp. defense:<br>" + spDefenseStat.toString()
+			//speedStatElement.innerHTML = "Speed:<br>" + speedStat.toString()
 
-//			let pokemonType1 = JSON.stringify(json.Types[0])
-//			pokemonImage.src = JSON.stringify(json.Sprite).substring(1, JSON.stringify(json.Sprite).length - 1)
-//			pokemonImageDiv.style.display = "block";
-//			emptyDiv.style.display = "block";
-
-
+			nameElement.innerHTML = nameValue.toString()
+			idElement.innerHTML = id.toString()
+			heightElement.innerHTML = height.toString()
+			weightElement.innerHTML = weight.toString()
+			type1Element.innerHTML = type1
+			type2Element.innerHTML = type2
+			hpStatElement.innerHTML = hpStat.toString()
+			attackStatElement.innerHTML = attackStat.toString()
+			defenseStatElement.innerHTML = defenseStat.toString()
+			spAttackStatElement.innerHTML = spAttackStat.toString()
+			spDefenseStatElement.innerHTML = spDefenseStat.toString()
+			speedStatElement.innerHTML = speedStat.toString()
+			
 			imgElement.src = JSON.stringify(json.Sprite).substring(1, JSON.stringify(json.Sprite).length - 1); //
 
 			imgDivElement.appendChild(imgElement);
 
+			//pokemonNestedRowElement.appendChild(imgDivElement);
+			pokemonNestedRowElement.appendChild(nameElement);
+			pokemonNestedRowElement.appendChild(idElement);
+			pokemonNestedRowElement.appendChild(heightElement);
+			pokemonNestedRowElement.appendChild(weightElement);
+			pokemonNestedRowElement.appendChild(type1Element);
+			pokemonNestedRowElement.appendChild(type2Element);
+			pokemonNestedRowElement.appendChild(hpStatElement);
+			pokemonNestedRowElement.appendChild(attackStatElement);
+			pokemonNestedRowElement.appendChild(defenseStatElement);
+			pokemonNestedRowElement.appendChild(spAttackStatElement);
+			pokemonNestedRowElement.appendChild(spDefenseStatElement);
+			pokemonNestedRowElement.appendChild(speedStatElement);
+
 			pokemonRowElement.appendChild(imgDivElement);
-			pokemonRowElement.appendChild(idElement);
-			pokemonRowElement.appendChild(heightElement);
-			pokemonRowElement.appendChild(weightElement);
-			pokemonRowElement.appendChild(type1Element);
-			pokemonRowElement.appendChild(type2Element);
-			pokemonRowElement.appendChild(hpStatElement);
-			pokemonRowElement.appendChild(attackStatElement);
-			pokemonRowElement.appendChild(defenseStatElement);
-			pokemonRowElement.appendChild(spAttackStatElement);
-			pokemonRowElement.appendChild(spDefenseStatElement);
-			pokemonRowElement.appendChild(speedStatElement);
+			pokemonRowElement.appendChild(pokemonColElement);
+			pokemonColElement.appendChild(pokemonNestedRowElement);
+			pokemonRowElement.appendChild(pokemonColElement);
 			
 			pokemonContainer.prepend(pokemonRowElement);
 
 			pokemonNameInput.value = "";
+		}).catch(err => {
+			getPokemonError.style.display = "block";
+			grid.classList.replace("pt-3", "pt-2");
+			getPokemonError.innerHTML = err;
+			return Promise.reject(err);
 		})
 }
 
@@ -166,10 +193,8 @@ function getBgColor(answer, element) {
 			element.classList.add(overBg);
 			break
 	}
-	console.log(answer)
-	console.log(element)
 }
 
-function pokemonWikiPage() {
-	window.open("guessPokemon.html?Auth=" + encodeURIComponent(token), "_self");
+function PokemonWikiPage() {
+	window.open("SilverFinances.html?Auth=" + encodeURIComponent(token), "_self");
 }
