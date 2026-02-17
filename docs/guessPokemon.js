@@ -1,7 +1,11 @@
 let grid = document.getElementById("grid");
+let panel = document.getElementById("mainPanel");
+let header = document.getElementById("header");
+let allInputElements = document.getElementById("allInputElements");
 let pokemonNameInput = document.getElementById("pokemonName");
 let guessButton = document.getElementById("guessButton");
 let token = "";
+const attempts = []
 const urlParams = new URLSearchParams(window.location.search);
 token = urlParams.get("Auth");
 
@@ -33,135 +37,96 @@ function Guess() {
 			}
 			return responseJson;
 		}).then(json => {
+			if (attempts.includes(json.Id)) {
+				throw "Pokemon Repetido"
+			}
+			attempts.push(parseInt(JSON.stringify(json.Id)))
 			getPokemonError.style.display = "none";
 			grid.classList.replace("pt-1", "pt-3");
 			let pokemonContainer = document.getElementById("pokemonContainer");
 
-			let pokemonRowElement = document.createElement("div"); //
-			let pokemonColElement = document.createElement("div"); //
-			let pokemonNestedRowElement = document.createElement("div"); //
-			let imgDivElement = document.createElement("div"); //
-			let imgElement = document.createElement("img"); //
-			let nameElement = document.createElement("div"); //
-			let idElement = document.createElement("div"); //
-			let heightElement = document.createElement("div"); //
-			let weightElement = document.createElement("div"); //
-			let type1Element = document.createElement("div"); //
-			let type2Element = document.createElement("div"); //
-			let hpStatElement = document.createElement("div"); //
-			let attackStatElement = document.createElement("div"); //
-			let defenseStatElement = document.createElement("div"); //
-			let spAttackStatElement = document.createElement("div"); //
-			let spDefenseStatElement = document.createElement("div"); //
-			let speedStatElement = document.createElement("div"); //
-			// col-lg-1
-			let classExample = "col-3 col-md-2 p-2 p-3 border border-3 border-my-dark-red rounded align-items-center fw-bold "
-			pokemonRowElement.className = "row mt-2 text-center";
-			pokemonColElement.className = "col-9 col-sm-10 col-xxl-11 text-center";
-			pokemonNestedRowElement.className = "row";
+			let pokemonNestedRowElement = document.createElement("div");
+			let imgColElement = document.createElement("div");
 
-			//imgDivElement.className = classExample + " bg-my-light";
-			imgDivElement.className = "col-3 col-sm-2 col-xxl-1 border p-2 w-5 border-4 border-my-dark-red rounded align-self-center bg-my-light";
-			
-			nameElement.className = classExample + " bg-my-light";
-			idElement.className = classExample;
-			heightElement.className = classExample;
-			weightElement.className = classExample;
-			type1Element.className = classExample;
-			type2Element.className = classExample;
-			hpStatElement.className = classExample;
-			attackStatElement.className = classExample;
-			defenseStatElement.className = classExample;
-			spAttackStatElement.className = classExample;
-			spDefenseStatElement.className = classExample;
-			speedStatElement.className = classExample;
+			let imgElement = document.createElement("img");
+			let idElement = document.createElement("div");
+			let type1Element = document.createElement("div");
+			let type2Element = document.createElement("div");
+			let genElement = document.createElement("div");
+			let colorElement = document.createElement("div");
+			let endClassExample = "col-4 col-sm-2 bg-my-light p-2 my-max-width bg-opacity-10 border-start-0 rounded-end p-3 border border-3 border-my-dark-red align-items-center fw-bold "
+			let middleClassExample = "col-4 col-sm-2 bg-my-light p-2 my-max-width bg-opacity-10 border-start-0 border-end-0 p-3 border border-3 border-my-dark-red align-items-center fw-bold "
+			pokemonNestedRowElement.className = "row h-100 text-center justify-content-center mt-2";
+			imgColElement.className = "col-4 col-sm-2 border p-2 my-max-width w-5 border-3 border-my-dark-red rounded-start bg-opacity-10 border-end-0 align-self-center bg-my-light";
 
-			getBgColor(json.Answers[0], idElement)
-			getBgColor(json.Answers[1], heightElement)
-			getBgColor(json.Answers[2], weightElement)
-			getBgColor(json.Answers[3], type1Element)
-			getBgColor(json.Answers[4], type2Element)
-			getBgColor(json.Answers[5], hpStatElement)
-			getBgColor(json.Answers[6], attackStatElement)
-			getBgColor(json.Answers[7], defenseStatElement)
-			getBgColor(json.Answers[8], spAttackStatElement)
-			getBgColor(json.Answers[9], spDefenseStatElement)
-			getBgColor(json.Answers[10], speedStatElement)
 
-			nameValue  = JSON.stringify(json.Name).substring(1, JSON.stringify(json.Name).length - 1)
-			id = parseInt(JSON.stringify(json.Id));
-			height = parseInt(JSON.stringify(json.Height));
-			weight = parseInt(JSON.stringify(json.Weight));
+			idElement.className = middleClassExample;
+			type1Element.className = middleClassExample;
+			type2Element.className = middleClassExample;
+			genElement.className = middleClassExample;
+			colorElement.className = endClassExample;
 
-			type1  = JSON.stringify(json.Types[0]).substring(1, JSON.stringify(json.Types[0]).length - 1)
-			type2 = "None"
+			let idBg = getBgColor(json.Answers[0]);
+			let type1Bg = getBgColor(json.Answers[1]);
+			let type2Bg = getBgColor(json.Answers[2]);
+			let genBg = getBgColor(json.Answers[3]);
+			let colorBg = getBgColor(json.Answers[4]);
+
+			let id = parseInt(JSON.stringify(json.Id)).toString();
+			let type1 = JSON.stringify(json.Types[0]).substring(1, JSON.stringify(json.Types[0]).length - 1)
+			let type2 = "None"
 			if (json.Types.length > 1) {
-				type2  = JSON.stringify(json.Types[1]).substring(1, JSON.stringify(json.Types[1]).length - 1)
+				type2 = JSON.stringify(json.Types[1]).substring(1, JSON.stringify(json.Types[1]).length - 1)
 			}
 
-			hpStat = parseInt(JSON.stringify(json.Stats[0]));
-			attackStat = parseInt(JSON.stringify(json.Stats[1]));
-			defenseStat = parseInt(JSON.stringify(json.Stats[2]));
-			spAttackStat = parseInt(JSON.stringify(json.Stats[3]));
-			spDefenseStat = parseInt(JSON.stringify(json.Stats[4]));
-			speedStat = parseInt(JSON.stringify(json.Stats[5]));
+			gen = JSON.stringify(json.Gen).substring(1, JSON.stringify(json.Gen).length - 1)
+			let color = JSON.stringify(json.Color).substring(1, JSON.stringify(json.Color).length - 1)
 
-			//nameElement.innerHTML = "Name:<br>" + nameValue.toString()
-			//idElement.innerHTML = "Id:<br>" + id.toString()
-			//heightElement.innerHTML = "Height:<br>" + height.toString()
-			//weightElement.innerHTML = "Weight:<br>" + weight.toString()
-			//type1Element.innerHTML = "Type 1:<br>" + type1
-			//type2Element.innerHTML = "Type 2:<br>" + type2
-			//hpStatElement.innerHTML = "HP:<br>" + hpStat.toString()
-			//attackStatElement.innerHTML = "Attack:<br>" + attackStat.toString()
-			//defenseStatElement.innerHTML = "Defense:<br>" + defenseStat.toString()
-			//spAttackStatElement.innerHTML = "Sp. attack:<br>" + spAttackStat.toString()
-			//spDefenseStatElement.innerHTML = "Sp. defense:<br>" + spDefenseStat.toString()
-			//speedStatElement.innerHTML = "Speed:<br>" + speedStat.toString()
+			idElement.innerHTML = 'id: <br><div class="fw-bold border-1 border-my-dark-red rounded align-self-center ' + idBg + '">' + id + '</div>'
+			type1Element.innerHTML = 'type 1:<br><div class="fw-bold border-1 border-my-dark-red rounded align-self-center ' + type1Bg + '">' + type1 + '</div>'
+			type2Element.innerHTML = 'type 2:<br><div class="fw-bold border-1 border-my-dark-red rounded align-self-center ' + type2Bg + '">' + type2 + '</div>'
+			genElement.innerHTML = 'gen: <br><div class="fw-bold border-1 border-my-dark-red rounded align-self-center ' + genBg + '">' + gen + '</div>'
+			colorElement.innerHTML = 'color: <br><div class="fw-bold border-1 border-my-dark-red rounded align-self-center ' + colorBg + '">' + color + '</div>'
 
-			nameElement.innerHTML = "name: <br>" +nameValue.toString()
-			idElement.innerHTML = "id: <br>" +id.toString()
-			heightElement.innerHTML = "height: <br>" +height.toString()
-			weightElement.innerHTML = "weight: <br>" +weight.toString()
-			type1Element.innerHTML = "type 1: <br>" +type1
-			type2Element.innerHTML = "type 2: <br>" +type2
-			hpStatElement.innerHTML = "hp: <br>" +hpStat.toString()
-			attackStatElement.innerHTML = "att: <br>" +attackStat.toString()
-			defenseStatElement.innerHTML = "def: <br>" +defenseStat.toString()
-			spAttackStatElement.innerHTML = "sp att: <br>" +spAttackStat.toString()
-			spDefenseStatElement.innerHTML = "sp def: <br>" +spDefenseStat.toString()
-			speedStatElement.innerHTML = "speed: <br>" +speedStat.toString()
-			
-			imgElement.src = JSON.stringify(json.Sprite).substring(1, JSON.stringify(json.Sprite).length - 1); //
 
-			imgDivElement.appendChild(imgElement);
+			imgElement.src = JSON.stringify(json.Sprite).substring(1, JSON.stringify(json.Sprite).length - 1);
 
-			//pokemonNestedRowElement.appendChild(imgDivElement);
-			pokemonNestedRowElement.appendChild(nameElement);
+			imgColElement.appendChild(imgElement);
+
+			pokemonNestedRowElement.appendChild(imgColElement);
+
 			pokemonNestedRowElement.appendChild(idElement);
-			pokemonNestedRowElement.appendChild(heightElement);
-			pokemonNestedRowElement.appendChild(weightElement);
 			pokemonNestedRowElement.appendChild(type1Element);
 			pokemonNestedRowElement.appendChild(type2Element);
-			pokemonNestedRowElement.appendChild(hpStatElement);
-			pokemonNestedRowElement.appendChild(attackStatElement);
-			pokemonNestedRowElement.appendChild(defenseStatElement);
-			pokemonNestedRowElement.appendChild(spAttackStatElement);
-			pokemonNestedRowElement.appendChild(spDefenseStatElement);
-			pokemonNestedRowElement.appendChild(speedStatElement);
+			pokemonNestedRowElement.appendChild(genElement);
+			pokemonNestedRowElement.appendChild(colorElement);
 
-			pokemonRowElement.appendChild(imgDivElement);
-			pokemonRowElement.appendChild(pokemonColElement);
-			pokemonColElement.appendChild(pokemonNestedRowElement);
-			pokemonRowElement.appendChild(pokemonColElement);
-			
-			pokemonContainer.prepend(pokemonRowElement);
+			pokemonContainer.prepend(pokemonNestedRowElement);
 
 			pokemonNameInput.value = "";
+			if (json.Answers[0] === "right") {
+				pokemonNameInput.remove()
+				guessButton.remove()
+				header.innerHTML = "Parabéns"
+
+				let congratulations = document.createElement("div");
+				congratulations.innerHTML = 'Você acertou em:<br>' + attempts.length +' tentativas'
+				congratulations.className = "text-center text-my-dark h2"
+
+				let tryAgainButton = document.createElement("button");
+				tryAgainButton.className = "btn btn-danger bg-my-dark border-my-dark-red border-2 text-my-light fs-5"
+				tryAgainButton.innerHTML = "Tentar denovo"
+				tryAgainButton.onclick = tryAgain;
+				tryAgainButton.type = "button"
+
+				allInputElements.prepend(congratulations);
+				grid.appendChild(tryAgainButton);
+			}
 		}).catch(err => {
 			getPokemonError.style.display = "block";
 			grid.classList.replace("pt-3", "pt-2");
 			getPokemonError.innerHTML = err;
+			pokemonNameInput.value = "";
 			return Promise.reject(err);
 		})
 }
@@ -170,7 +135,10 @@ function LoginPage() {
 	window.open("index.html", "_self");
 }
 
-function getBgColor(answer, element) {
+function tryAgain() {
+	window.location.reload();
+}
+function getBgColor(answer) {
 	let greenBg = "bg-my-green";
 	let yellowBg = "bg-my-yellow";
 	let redBg = "bg-my-light-red";
@@ -178,20 +146,15 @@ function getBgColor(answer, element) {
 	let overBg = "bg-my-over";
 	switch (answer) {
 		case "right":
-			element.classList.add(greenBg);
-			break
+			return greenBg
 		case "wrong":
-			element.classList.add(redBg);
-			break
+			return redBg
 		case "wrongPlace":
-			element.classList.add(yellowBg);
-			break
+			return yellowBg
 		case "under":
-			element.classList.add(underBg);
-			break
+			return underBg
 		case "over":
-			element.classList.add(overBg);
-			break
+			return overBg
 	}
 }
 

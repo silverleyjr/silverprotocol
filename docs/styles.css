@@ -12,6 +12,9 @@
 	--my-over: #F97316
 }
 
+.my-max-width {
+	max-width: 150px;
+}
 .bg-my-red {
 	background-color: #FFD6D6 !important
 }

@@ -22,26 +22,15 @@
 		<div class="container">
 			<div class="row justify-content-center" style="margin-top: 5rem !important">
 				<div class="col-xl-5 col-lg-6 col-md-8 col-10">
-					<div class="border border-3 border-my-dark-red rounded bg-my-light p-2">
-						<h1 class="text-center text-my-dark border-bottom border-2 border-my-dark-red m-2 mx-5">
+					<div class="border border-3 border-my-dark-red rounded bg-my-light p-2" id="mainPanel">
+						<h1 class="text-center text-my-dark border-bottom border-2 border-my-dark-red m-2 mx-5" id="header">
 							Guess the pokemon
 						</h1>
-						<div class="mx-3 my-2 py-2">
-							<!--<label for="pokemonName" class="fs-3 text-my-dark-red">Pokemon:</label><br>-->
-							<input class="form-control" type="text" id="pokemonName" placeholder="Name or Id of the pokemon">
+						<div class="mx-3 my-2 py-2" id="allInputElements">
+							<input class="form-control focus-ring focus-ring-danger" type="text" id="pokemonName" placeholder="Name or Id of the pokemon">
 							<div style="display: none" id="getPokemonError" class="fs-6 mt-1 pt-1 text-my-dark-red "></div>
 							<div class="d-grid pt-3" id="grid">
 								<button type="button" id="guessButton" class="btn btn-danger bg-my-dark border-my-dark-red border-2 text-my-light fs-5" onclick="Guess()">Guess</button>
-								<!--<div class="container">
-									<div class="row">
-										<div class="col col-6 w-50 px-1 fs-5">
-											<div id="DetailsText" style="display: none" class="text-my-light border bg-my-dark rounded border-my-dark-red w-100 h-100 mt-2 p-2"></div>
-										</div>
-										<div class="col col-6 w-50 px-1 fs-5">
-											<div id="StatsText" style="display: none" class="text-my-light border bg-my-dark rounded border-my-dark-red w-100 h-100 mt-2 p-2"></div>
-										</div>
-									</div>
-</div>-->
 							</div>
 						</div>
 					</div>
