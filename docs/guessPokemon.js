@@ -110,7 +110,7 @@ function Guess() {
 				header.innerHTML = "Parabéns"
 
 				let congratulations = document.createElement("div");
-				congratulations.innerHTML = 'Você acertou em:<br>' + attempts.length +' tentativas'
+				congratulations.innerHTML = 'Você acertou em:<br>' + attempts.length +' tentativas<br>Pokemon: ' + JSON.stringify(json.Name).substring(1, JSON.stringify(json.Name).length - 1)
 				congratulations.className = "text-center text-my-dark h2"
 
 				let tryAgainButton = document.createElement("button");
